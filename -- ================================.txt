@@ -1,0 +1,220 @@
+-- ============================================================
+-- RIVO HUB — KEY SYSTEM + LOADER (CENTERED + VISIBLE DISCORD)
+-- Key: igsdy2qeaoiasfb3829
+-- Discord: https://discord.gg/ZN4jtyPNHG
+-- ============================================================
+
+local VALID_KEY    = "igsdy2qeaoiasfb3829"
+local DISCORD_LINK = "https://discord.gg/ZN4jtyPNHG"
+local SCRIPT_URL   = "https://raw.githubusercontent.com/gurungunknown96-gif/duels/refs/heads/main/main"
+
+getgenv().RivoKeyPassed = nil
+
+local Players      = game:GetService("Players")
+local CoreGui      = game:GetService("CoreGui")
+local LocalPlayer  = Players.LocalPlayer
+
+pcall(function()
+    local old = CoreGui:FindFirstChild("RivoKeySystem")
+    if old then old:Destroy() end
+end)
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "RivoKeySystem"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = (pcall(function() return CoreGui end) and CoreGui) or LocalPlayer:WaitForChild("PlayerGui")
+
+-- Card — CENTERED
+local card = Instance.new("Frame")
+card.Size = UDim2.fromOffset(340, 300)
+card.Position = UDim2.fromScale(0.5, 0.5)
+card.AnchorPoint = Vector2.new(0.5, 0.5)
+card.BackgroundColor3 = Color3.fromRGB(14, 20, 40)
+card.BackgroundTransparency = 0.05
+card.BorderSizePixel = 0
+card.Active = true
+card.Draggable = true
+card.Parent = gui
+Instance.new("UICorner", card).CornerRadius = UDim.new(0, 12)
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(30, 144, 255)
+stroke.Thickness = 2
+stroke.Parent = card
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 32)
+title.Position = UDim2.new(0, 0, 0, 8)
+title.BackgroundTransparency = 1
+title.Text = "RIVO HUB — KEY"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextColor3 = Color3.fromRGB(30, 144, 255)
+title.Parent = card
+
+-- Key input
+local inputFrame = Instance.new("Frame")
+inputFrame.Size = UDim2.new(1, -28, 0, 34)
+inputFrame.Position = UDim2.new(0, 14, 0, 46)
+inputFrame.BackgroundColor3 = Color3.fromRGB(22, 30, 55)
+inputFrame.BorderSizePixel = 0
+inputFrame.Parent = card
+Instance.new("UICorner", inputFrame).CornerRadius = UDim.new(0, 6)
+
+local input = Instance.new("TextBox")
+input.Size = UDim2.new(1, -16, 1, 0)
+input.Position = UDim2.new(0, 8, 0, 0)
+input.BackgroundTransparency = 1
+input.Text = ""
+input.PlaceholderText = "Paste key here..."
+input.Font = Enum.Font.Gotham
+input.TextSize = 13
+input.TextColor3 = Color3.fromRGB(230, 240, 255)
+input.PlaceholderColor3 = Color3.fromRGB(120, 140, 170)
+input.ClearTextOnFocus = false
+input.Parent = inputFrame
+
+-- Continue button
+local submit = Instance.new("TextButton")
+submit.Size = UDim2.new(0.5, -16, 0, 32)
+submit.Position = UDim2.new(0, 14, 0, 88)
+submit.BackgroundColor3 = Color3.fromRGB(30, 100, 220)
+submit.BorderSizePixel = 0
+submit.Text = "Continue"
+submit.Font = Enum.Font.GothamBold
+submit.TextSize = 14
+submit.TextColor3 = Color3.new(1, 1, 1)
+submit.Parent = card
+Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 6)
+
+-- Get Key button (clearly labeled)
+local getKey = Instance.new("TextButton")
+getKey.Size = UDim2.new(0.5, -16, 0, 32)
+getKey.Position = UDim2.new(0.5, 2, 0, 88)
+getKey.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+getKey.BorderSizePixel = 0
+getKey.Text = "Get Key (Discord)"
+getKey.Font = Enum.Font.GothamBold
+getKey.TextSize = 13
+getKey.TextColor3 = Color3.new(1, 1, 1)
+getKey.Parent = card
+Instance.new("UICorner", getKey).CornerRadius = UDim.new(0, 6)
+
+-- ── VISIBLE DISCORD LINK SECTION ──
+local discordLabel = Instance.new("TextLabel")
+discordLabel.Size = UDim2.new(1, -28, 0, 18)
+discordLabel.Position = UDim2.new(0, 14, 0, 128)
+discordLabel.BackgroundTransparency = 1
+discordLabel.Text = "Join Discord to get your key:"
+discordLabel.Font = Enum.Font.Gotham
+discordLabel.TextSize = 12
+discordLabel.TextColor3 = Color3.fromRGB(160, 180, 210)
+discordLabel.TextXAlignment = Enum.TextXAlignment.Left
+discordLabel.Parent = card
+
+local discordLink = Instance.new("TextButton")
+discordLink.Size = UDim2.new(1, -28, 0, 26)
+discordLink.Position = UDim2.new(0, 14, 0, 148)
+discordLink.BackgroundColor3 = Color3.fromRGB(20, 26, 48)
+discordLink.BorderSizePixel = 0
+discordLink.Text = DISCORD_LINK
+discordLink.Font = Enum.Font.GothamBold
+discordLink.TextSize = 12
+discordLink.TextColor3 = Color3.fromRGB(120, 170, 255)
+discordLink.TextXAlignment = Enum.TextXAlignment.Left
+discordLink.Parent = card
+Instance.new("UICorner", discordLink).CornerRadius = UDim.new(0, 6)
+
+-- Click the link text to copy
+discordLink.MouseButton1Click:Connect(function()
+    local ok = pcall(function() setclipboard(DISCORD_LINK) end)
+    if ok then
+        discordLink.TextColor3 = Color3.fromRGB(80, 220, 120)
+        discordLink.Text = "Copied! " .. DISCORD_LINK
+        task.delay(2, function()
+            if discordLink and discordLink.Parent then
+                discordLink.TextColor3 = Color3.fromRGB(120, 170, 255)
+                discordLink.Text = DISCORD_LINK
+            end
+        end)
+    end
+end)
+
+-- Status label
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, -28, 0, 40)
+status.Position = UDim2.new(0, 14, 0, 184)
+status.BackgroundTransparency = 1
+status.Text = "Enter key or click Get Key."
+status.Font = Enum.Font.Gotham
+status.TextSize = 11
+status.TextWrapped = true
+status.TextColor3 = Color3.fromRGB(160, 180, 210)
+status.Parent = card
+
+-- Minimize button
+local minBtn = Instance.new("TextButton")
+minBtn.Size = UDim2.fromOffset(24, 24)
+minBtn.Position = UDim2.new(1, -32, 0, 8)
+minBtn.BackgroundColor3 = Color3.fromRGB(30, 40, 70)
+minBtn.BorderSizePixel = 0
+minBtn.Text = "–"
+minBtn.Font = Enum.Font.GothamBold
+minBtn.TextSize = 16
+minBtn.TextColor3 = Color3.new(1, 1, 1)
+minBtn.Parent = card
+Instance.new("UICorner", minBtn).CornerRadius = UDim.new(0, 6)
+
+local minimized = false
+local fullSize = UDim2.fromOffset(340, 300)
+local miniSize = UDim2.fromOffset(340, 42)
+minBtn.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    card.Size = minimized and miniSize or fullSize
+    minBtn.Text = minimized and "+" or "–"
+end)
+
+-- Get Key button → copy Discord
+getKey.MouseButton1Click:Connect(function()
+    local ok = pcall(function() setclipboard(DISCORD_LINK) end)
+    if ok then
+        status.TextColor3 = Color3.fromRGB(80, 220, 120)
+        status.Text = "Discord link copied! Join for the key."
+    else
+        status.TextColor3 = Color3.fromRGB(255, 200, 80)
+        status.Text = "Copy manually: " .. DISCORD_LINK
+    end
+end)
+
+-- Validate + Load
+local unlocked = false
+local function tryUnlock()
+    if unlocked then return end
+    local entered = (input.Text or ""):gsub("%s+", "")
+    if entered == VALID_KEY then
+        unlocked = true
+        status.TextColor3 = Color3.fromRGB(80, 220, 120)
+        status.Text = "Key correct! Loading hub..."
+        submit.Text = "Loading..."
+        submit.BackgroundColor3 = Color3.fromRGB(40, 160, 80)
+        task.wait(0.5)
+        pcall(function() gui:Destroy() end)
+        local ok, err = pcall(function()
+            loadstring(game:HttpGet(SCRIPT_URL))()
+        end)
+        if not ok then
+            warn("[Rivo] Failed to load hub:", err)
+        end
+    else
+        status.TextColor3 = Color3.fromRGB(255, 90, 90)
+        status.Text = "Invalid key."
+    end
+end
+
+submit.MouseButton1Click:Connect(tryUnlock)
+input.FocusLost:Connect(function(enterPressed)
+    if enterPressed then tryUnlock() end
+end)
